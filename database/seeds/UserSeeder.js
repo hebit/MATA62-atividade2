@@ -21,7 +21,7 @@ class UserSeeder {
     const user = await Database.from("users").insert([
       {
         uid: uuid(),
-        provider: "local",
+        // provider: "local",
         first_name: "Admin",
         last_name: "admin",
         email: "admin@admin.com",

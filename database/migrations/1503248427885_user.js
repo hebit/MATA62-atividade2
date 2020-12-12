@@ -10,7 +10,8 @@ class UserSchema extends Schema {
       table.string("uid").notNullable();
       table.string("email", 254).notNullable().unique();
       table.string("password", 60).notNullable();
-      table.string("full_name");
+      table.string("first_name");
+      table.string("last_name");
       table.string("phone", 14);
       table.enum("role", [
         "admin",
@@ -18,7 +19,8 @@ class UserSchema extends Schema {
         "superintent",
         "coordinator",
         "director",
-        "employe",
+        "employe_v",
+        "employe_p",
       ]);
       table.string("confirmation_token");
       table.datetime("last_login");

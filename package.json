@@ -5,7 +5,7 @@
   "description": "The fullstack application boilerplate for Adonisjs",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon --inspect=0.0.0.0:9229 ./server.js ",
+    "start": "nodemon --ignore './node_modules/' --inspect=0.0.0.0:9229 ./server.js ",
     "test": "node ace test",
     "buildDev": " webpack --config webpack.config.js --verbose --watch  --inline",
     "dev": "webpack-dev-server --inline --progress --webpack.dev.config.js"

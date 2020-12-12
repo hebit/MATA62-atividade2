@@ -20,6 +20,8 @@ Route.group(() => {
   Route.get("/", "HomeController.index").as("root");
 }).middleware("auth");
 
+Route.resource("/institutions", "InstitutionController");
+
 // Route.group(() => {
 //   Route.get('/phonecode', 'HomeController.phonecode').as('phonecode');
 // }).prefix('api').middleware('auth');
