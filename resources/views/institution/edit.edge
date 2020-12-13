@@ -1,7 +1,7 @@
 @layout('layouts/app')
 @section('content')
 <section class="content">
-<form method="POST" action="{{ route('institutions.store') }}">
+<form method="POST" action="{{ route('institutions.update',{ id: institution.id }) + '?_method=PUT' }}">
   {{ csrfField() }}
   <div class="row">
     <div class="col-xs-12">
@@ -15,7 +15,7 @@
             <div class="col-xs-12">
               <div class="form-group">
                 <label>Nome</label>
-                  <input type="text" class="form-control" name="name" >
+                <input value="{{ institution.name }}" type="text" class="form-control" name="name" >
               </div>
             </div>
             <!-- /.input group -->
@@ -24,7 +24,7 @@
             <div class="col-xs-12">
               <div class="form-group">
                 <label>Endereço</label>
-                  <input type="text" class="form-control" name="address" >
+                  <input value="{{ institution.address }}" type="text" class="form-control" name="address" >
               </div>
             </div>
             <!-- /.input group -->
@@ -33,7 +33,7 @@
             <div class="col-xs-6">
               <div class="form-group">
                 <label>Cidade</label>
-                  <input type="text" class="form-control" name="city" >
+                  <input value="{{ institution.city }}" type="text" class="form-control" name="city" >
               </div>
             </div>
             <!-- /.input group -->
@@ -42,7 +42,7 @@
             <div class="col-xs-6">
               <div class="form-group">
                 <label>Estado</label>
-                  <input type="text" class="form-control" name="state" >
+                  <input value="{{ institution.state }}" type="text" class="form-control" name="state" >
               </div>
             </div>
             <!-- /.input group -->
@@ -51,7 +51,7 @@
             <div class="col-xs-12">
               <div class="form-group">
                 <label>Credenciamento (MEC)</label>
-                  <input type="text" class="form-control" name="emec_code" >
+                  <input value="{{ institution.emec_code }}" type="text" class="form-control" name="emec_code" >
               </div>
             </div>
             <!-- /.input group -->
@@ -60,7 +60,7 @@
             <div class="col-xs-12">
               <div class="form-group">
                 <label>Mantenedora</label>
-                  <input type="text" class="form-control" name="maintainer" >
+                  <input value="{{ institution.maintainer }}" type="text" class="form-control" name="maintainer" >
               </div>
             </div>
             <!-- /.input group -->

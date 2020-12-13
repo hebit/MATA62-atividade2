@@ -1,18 +1,21 @@
-<aside class="main-sidebar">
+<aside class="main-sidebar" style="padding-top: 0">
   <!-- sidebar: style can be found in sidebar.less -->
   <section class="sidebar">
     <!-- Sidebar user panel -->
-    <div class="user-panel">
-      <div class="pull-left image">
-        <img src="{{ assetsUrl('img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
-      </div>
-      <div class="pull-left info">
+    <div class="user-panel py-5">
+      {{--  <div class="pull-left image" style="height: 18px" >  --}}
+        {{--  <img src="{{ assetsUrl('img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">  --}}
+      {{--  </div>  --}}
+      {{--  <div class="pull-left info">  --}}
 
         @loggedIn
-        <p class="hidden-xs"> {{ auth.user.last_name }}</p>
+        <div class="mt-1 pull-left" >
+        <p class="hidden-xs text-light " style="color: white;" > {{ auth.user.first_name }}</p>
+        {{--  <p class="hidden-xs text-light " style="color: white;" > {{ auth.user.first_name }}</p>  --}}
+        </div>
         @endloggedIn
-        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-      </div>
+        {{--  <a href="#"><i class="fa fa-circle text-success"></i> Online</a>  --}}
+      {{--  </div>  --}}
     </div>
 
     <!-- sidebar menu: : style can be found in sidebar.less -->
@@ -20,30 +23,99 @@
       <li class="active ">
         <a href="{{ route('root') }}">
           <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-
-        </a>
-
-      </li>
-      <li class="treeview">
-        <a href="">
-          <i class="fa fa-users"></i>
-          <span>Users</span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu">
-          <li><a href="{{ route('userManage') }}"><i class="fa fa-circle-o"></i>Manage User</a></li>
-          <li><a href="{{route('userAdd')}}"><i class="fa fa-circle-o"></i> Add User</a></li>
-          <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i>Users In Organization</a></li>
-        </ul>
-      </li>
-      <li>
-        <a href="pages/widgets.html">
-          <i class="fa fa-cogs"></i> <span>System Configuration</span>
-
+          {{auth.user.institution_id}}
         </a>
       </li>
+      @if(auth.user.institution_id != null && (institution == undefined || institution.is_valid))
+        @if(auth.user.role == 'superintent' || auth.user.role == 'director')
+          <li class="treeview">
+            <a href="">
+              <i class="fa fa-users"></i>
+              <span>Usuários</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="{{ route('user.manage') }}"><i class="fa fa-circle-o"></i>Gerenciar Usuários</a></li>
+              {{--  <li><a href="{{ route('user.add') }}"><i class="fa fa-circle-o"></i> Add User</a></li>  --}}
+              {{--  <li><a href="{{ route('user.index') }}"><i class="fa fa-circle-o"></i>Todos usuários</a></li>  --}}
+            </ul>
+          </li>
+        @endif
+        @if(auth.user.role == 'superintent' || auth.user.role == 'coordinator')
+        <li class="treeview">
+          <a href="">
+            <i class="fa fa-building"></i>
+            <span>Instituições</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('institutions.index') }}"><i class="fa fa-circle-o"></i>Instituições Parceiras</a></li>
+            @if(auth.user.role == 'superintent')
+              <li><a href="{{ route('institutions.edit') }}"><i class="fa fa-circle-o"></i>Editar Instituição</a></li>
+            @endif
+            {{--  <li><a href="{{ route('user.add') }}"><i class="fa fa-circle-o"></i> Add User</a></li>  --}}
+            {{--  <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i>Users In Organization</a></li>  --}}
+          </ul>
+        </li>
+        @endif
+        @if(auth.user.role == 'employee_p')
+          <li class="treeview">
+            <a href="">
+              <i class="fa fa-book"></i>
+              <span>Cursos</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="{{ route('courses.index') }}"><i class="fa fa-circle-o"></i>Gerenciar Cursos</a></li>
+              {{--  <li><a href="{{ route('user.add') }}"><i class="fa fa-circle-o"></i> Add User</a></li>  --}}
+              {{--  <li><a href="{{ route('user.index') }}"><i class="fa fa-circle-o"></i>Todos usuários</a></li>  --}}
+            </ul>
+          </li>
+        @endif
+        @if(auth.user.role == 'employee_p' || auth.user.role == 'employee_v')
+          <li class="treeview">
+            <a href="">
+              <i class="fa fa-graduation-cap"></i>
+              <span>Diplomas</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li>
+                <a href="{{ route('user.manage') }}">
+                  <i class="fa fa-circle-o"></i>
+                  @if(auth.user.role == 'employee_p')
+                    Solicitar Validação de Diploma
+                  @else
+                    Validar Solicitação de Diploma
+                  @endif
+                </a>
+              </li>
+              {{--  <li><a href="{{ route('user.add') }}"><i class="fa fa-circle-o"></i> Add User</a></li>  --}}
+              {{--  <li><a href="{{ route('user.index') }}"><i class="fa fa-circle-o"></i>Todos usuários</a></li>  --}}
+            </ul>
+          </li>
+        @endif
+      @else
+      <li class="active">
+        <a href="{{ route('root') }}">
+          <i class="fa fa-ban"></i> <span>Aguardando Liberação da Instituição Parceira</span>
+        </a>
+      </li>
+      @endif
+      {{--  <li>  --}}
+        {{--  <a href="pages/widgets.html">  --}}
+          {{--  <i class="fa fa-cogs"></i> <span>System Configuration</span>  --}}
+
+        {{--  </a>  --}}
+      {{--  </li>  --}}
 
 
     </ul>

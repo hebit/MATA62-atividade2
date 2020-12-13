@@ -1,8 +1,53 @@
 @layout('layouts/app')
-
 @section('content')
 <section class="content">
-  Mostrar todas instituições
-  <a href="{{ route('/institutions.create') }}">Criar instituição</a>
+  <div class="row">
+
+    <div class="col-xs-12">
+      <div class="box">
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table id="example2" class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th with="620px">Nome</th>
+                <th>Sitação</th>
+                <th with="120px" class="text-right">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              @if(institutions)
+                @each( item in institutions )
+                <tr>
+                  <td>{{item.name}}</td>
+                  <td>{{item.is_valid ? 'Aprovada' : 'Aguardando'}}</td>
+                  <td class="text-right">
+                    <a href="{{route('institutions.show', { id: item.id })}}" class="btn btn-primary btn-flat">
+                      <i class="fa  fa-eye"></i>
+                    </a>
+                    @if(user.role == 'superintent' && item.is_valid != true)
+                      <a href="{{route('institutions.allow', { id: item.id })}}" class="btn btn-success btn-flat">
+                        Aprovar Acesso <i class="fa  fa-check"></i>
+                      </a>
+                    @endif
+                  </td>
+                </tr>
+                @else
+                  <tr>
+                    <td colspan="3" >
+                      <p class="text-center">Não há registros até o momento</p>
+                    </td>
+                  </tr>
+                @endeach
+              @endif
+            </tbody>
+          </table>
+        </div>
+        <!-- /.box-body -->
+      </div>
+    </div>
+  </div>
+  <!-- /.col -->
+
 </section>
 @endsection

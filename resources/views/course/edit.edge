@@ -1,0 +1,126 @@
+@layout('layouts/app')
+@section('content')
+<section class="content">
+<form method="POST" action="{{ route('courses.update', { id: course.id }) + '?_method=PUT' }}">
+  {{ csrfField() }}
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box box-primary">
+        <div class="box-header">
+        </div>
+        <div class="box-body">
+          <div class="row">
+
+            <!-- /.input group -->
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label>Nome</label>
+                  <input value="{{ course.name }}"  required type="text" class="form-control" name="name" >
+              </div>
+            </div>
+            <!-- /.input group -->
+
+            <!-- /.input group -->
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label>Grau do curso</label>
+                <select name="degree" required class="form-control select2">
+                    @each( item in [
+                      'Graduação',
+                      'Pós-Graduação',
+                      'Técnico',
+                    ])
+                      <option {{ course.degree == item ? 'selected' : '' }} value="{{item}}">{{item}}</option>
+                    @endeach
+                </select>
+              </div>
+            </div>
+            <!-- /.input group -->
+
+            <!-- /.input group -->
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label>Credenciamento (MEC)</label>
+                  <input value="{{ course.emec_code }}" required type="text" class="form-control" name="emec_code" >
+              </div>
+            </div>
+            <!-- /.input group -->
+
+            <!-- /.input group -->
+            <div class="col-xs-6">
+              <div class="form-group">
+                <label>Autorização</label>
+                  <input value="{{ course.authorization }}" required type="text" class="form-control" name="authorization" >
+              </div>
+            </div>
+            <!-- /.input group -->
+
+            <!-- /.input group -->
+            <div class="col-xs-6">
+              <div class="form-group">
+                <label>Data da Autorização</label>
+                  <input value="{{ course.authorization_date }}" required type="date" class="form-control" name="authorization_date" >
+              </div>
+            </div>
+            <!-- /.input group -->
+
+            <!-- /.input group -->
+            <div class="col-xs-6">
+              <div class="form-group">
+                <label>Reconhecimento</label>
+                  <input value="{{ course.recognition }}" required type="text" class="form-control" name="recognition" >
+              </div>
+            </div>
+            <!-- /.input group -->
+
+            <!-- /.input group -->
+            <div class="col-xs-6">
+              <div class="form-group">
+                <label>Data da Reconhecimento</label>
+                  <input value="{{ course.recognition_date }}" required type="date" class="form-control" name="recognition_date" >
+              </div>
+            </div>
+            <!-- /.input group -->
+
+            <!-- /.input group -->
+            <div class="col-xs-6">
+              <div class="form-group">
+                <label>Renovação</label>
+                  <input value="{{ course.renovation }}" required type="text" class="form-control" name="renovation" >
+              </div>
+            </div>
+            <!-- /.input group -->
+
+            <!-- /.input group -->
+            <div class="col-xs-6">
+              <div class="form-group">
+                <label>Data da Renovação</label>
+                  <input value="{{ course.renovation_date }}" required type="date" class="form-control" name="renovation_date" >
+              </div>
+            </div>
+            <!-- /.input group -->
+
+            <!-- /.input group -->
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label>Observação</label>
+                  <textarea type="text" class="form-control" name="note">{{ course.note }}</textarea>
+              </div>
+            </div>
+            <!-- /.input group -->
+ 
+          </div>
+        </div>
+        <div class="box-footer">
+          <!-- tools box -->
+          <div class="pull-right box-tools">
+            <button type="submit" class="btn btn-block btn-success btn-flat">Salvar</button>
+          </div>
+          <!-- /. tools -->
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+</section>
+@endsection

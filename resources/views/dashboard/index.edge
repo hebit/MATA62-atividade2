@@ -2,6 +2,19 @@
 
 @section('content')
 <section class="content">
-  <button type="button" class="btn btn-primary">Criar validadora</button>
+
+@if(user.role == 'superintent')
+  {{--  <a href="{{route('institutions.create')}}" class="btn btn-primary">Criar validadora</a>  --}}
+  @if(user.institution_id == null)
+  @include('institution.create-validator')
+  @else 
+  <h3>Olá, {{ auth.user.first_name }}</h3>
+  <hr />
+  <a href="{{route('institutions.index')}}" class="btn btn-primary">Ver Instituições parceiras</a>
+  @endif
+@endif
+
+
+
 </section>
 @endsection

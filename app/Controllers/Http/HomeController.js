@@ -4,28 +4,16 @@ const Route = use("Route");
 const User = use("App/Models/User");
 const path = require("path");
 const fs = require("fs-extra");
+const Response = require("@adonisjs/framework/src/Response");
 
 class HomeController {
-  async index({ view }) {
-    var breadcrumb = [
-      {
-        name: "Home",
-        url: Route.url("/"),
-        icon: "fa-dashboard",
-        class: "",
-      },
-      {
-        name: "Dashboard",
-        url: "javascript:void(0)",
-        icon: "",
-        class: "active",
-      },
-    ];
-    view.share({
-      title: "Dashboard",
-      breadcrumb: breadcrumb,
-    });
-    return view.render("dashboard.index");
+  async index({ auth, view, response }) {
+    // const a = await auth.user.institution().fetch();
+    // console.log({ a });
+    // response.send({ a });
+    const user = auth.user;
+    const institution = await user.institution().fetch();
+    return view.render("dashboard.index", { user, institution });
   }
 }
 
