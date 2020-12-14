@@ -55,17 +55,19 @@
                 </td>
                 <td class="text-center">
                   <a href="{{route('user.edit', { id: item.id })}}" class="btn btn-info btn-flat"><i
-                      class="fa  fa-pencil"></i></a>
-                  {{--  <a class="btn btn-danger btn-flat"><i class="fa  fa-remove"></i></a>  --}}
-                  <button 
-                    type="button" 
-                    class="btn btn-danger btn-flat" 
-                    data-toggle="modal" 
-                    data-target="#delete-{{ item.id }}"
-                  >
-                    <i class="fa  fa-remove"></i>
-                    {{--  Launch demo modal  --}}
-                  </button>
+                      class="fa  fa-pencil"></i>
+                  </a>
+                  @if(auth.user.id != item.id)
+                    <button 
+                      type="button" 
+                      class="btn btn-danger btn-flat" 
+                      data-toggle="modal" 
+                      data-target="#delete-{{ item.id }}"
+                    >
+                      <i class="fa  fa-remove"></i>
+                      {{--  Launch demo modal  --}}
+                    </button>
+                  @endif
                 </td>
               </tr>
               @endeach
@@ -89,8 +91,8 @@
                   <b>Obs.: Essa ação não poderá ser desfeita</b>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <a type="button" href="{{ route('user.delete', { id: user.id }) }}" class="btn btn-danger">Save changes</a>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <a type="button" href="{{ route('user.delete', { id: user.id }) }}" class="btn btn-danger">Prosseguir</a>
                 </div>
               </div>
             </div>

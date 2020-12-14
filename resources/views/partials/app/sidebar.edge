@@ -23,7 +23,6 @@
       <li class="active ">
         <a href="{{ route('root') }}">
           <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-          {{auth.user.institution_id}}
         </a>
       </li>
       @if(auth.user.institution_id != null && (institution == undefined || institution.is_valid))
@@ -89,7 +88,7 @@
             </a>
             <ul class="treeview-menu">
               <li>
-                <a href="{{ route('user.manage') }}">
+                <a href="{{ route('diplomas.index') }}">
                   <i class="fa fa-circle-o"></i>
                   @if(auth.user.role == 'employee_p')
                     Solicitar Validação de Diploma
@@ -106,7 +105,19 @@
       @else
       <li class="active">
         <a href="{{ route('root') }}">
-          <i class="fa fa-ban"></i> <span>Aguardando Liberação da Instituição Parceira</span>
+          <i class="fa fa-ban"></i> <span>Aguardando 
+            @if(auth.user.role == 'superintent')
+            Criação
+            @else 
+            Liberação
+            @endif 
+            da Instituição 
+            @if(auth.user.role == 'superintent')
+            Validadora
+            @else
+            Parceira
+            @endif
+          </span>
         </a>
       </li>
       @endif

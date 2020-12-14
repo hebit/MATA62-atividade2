@@ -6,7 +6,7 @@
   </div>
 
   <div class="register-box-body">
-    <p class="login-box-msg">Forgot Password</p>
+    <p class="login-box-msg">Esqueci a senha</p>
 
     <form  method="POST" action="{{ route('auth.forgot') }}">
       {{ csrfField() }}
@@ -17,13 +17,13 @@
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <button type="submit" class="btn btn-danger btn-block btn-flat mt-2">Forgot password</button>
+          <button type="submit" class="btn btn-danger btn-block btn-flat mt-2">Enviar</button>
 
         </div>
 
       </div>
     </form>
-    <a class="mt-2" href="{{ route('login') }}">Return login</a><br>
+    <a class="mt-2" href="{{ route('login') }}">Voltar ao login</a><br>
 
   </div>
   <!-- /.form-box -->

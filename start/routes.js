@@ -34,7 +34,11 @@ Route.get("institutions/:id/allow", "InstitutionController.allow").as(
   "institutions.allow"
 );
 
-Route.resource("courses", "CourseController");
+Route.resource("courses", "CourseController").except(["destroy"]);
+Route.get("courses/:id/delete", "CourseController.destroy").as(
+  "courses.destroy"
+);
+Route.on("/diplomas").render("diploma.index").as("diplomas.index");
 
 // Route.group(() => {
 //   Route.get('/phonecode', 'HomeController.phonecode').as('phonecode');

@@ -40,6 +40,7 @@ class UserController extends BaseController {
     if (auth.user.institution_id == null) {
       return response.redirect(Route.url("root"));
     }
+
     const data = request.only([
       "first_name",
       "last_name",
@@ -49,6 +50,12 @@ class UserController extends BaseController {
       "phone",
       "password",
     ]);
+
+    const user = await User.query().where("email", "=", data.email).first();
+    if (user) {
+      return response.redirect("back");
+    }
+
     await User.create({ ...data, institution_id: auth.user.institution_id });
     return response.redirect(Route.url("user.manage"));
   }

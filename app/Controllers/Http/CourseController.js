@@ -122,7 +122,6 @@ class CourseController {
       const course = await Course.find(params.id);
       course.merge({ ...data, institution_id: course.institution_id });
       await course.save();
-      console.log("{ ex }");
     } catch (ex) {
       console.log({ ex });
     }
@@ -138,6 +137,7 @@ class CourseController {
    * @param {Response} ctx.response
    */
   async destroy({ params, request, response }) {
+    console.log("oi");
     const course = await Course.find(params.id);
     await course.delete();
     return response.route("courses.index");

@@ -26,6 +26,7 @@ class UserSeeder {
         last_name: "admin",
         email: "superintent@test.com",
         role: "superintent",
+        phone: "71 912345678",
         confirmation_token: "",
         password: await Hash.make("123456"),
       },

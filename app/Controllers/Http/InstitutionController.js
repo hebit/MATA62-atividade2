@@ -6,6 +6,7 @@
 
 const Route = use("Route");
 const Institution = use("App/Models/Institution");
+const User = use("App/Models/User");
 
 var moment = require("moment");
 
@@ -24,7 +25,6 @@ class InstitutionController {
    */
   async index({ auth, view }) {
     let institutions;
-    // const  =
     if (auth.user.role == "superintent") {
       institutions = await Institution.query()
         .where("type", "=", "partner")
@@ -32,7 +32,6 @@ class InstitutionController {
     } else {
       institutions = await Institution.find(auth.user.institution_id);
     }
-    // console.log({ user: auth.user });
     return view.render("institution.index", {
       institutions: institutions.rows,
       user: auth.user,
@@ -62,6 +61,16 @@ class InstitutionController {
    * @param {Response} ctx.response
    */
   async store({ auth, request, response }) {
+    const emails = request.only(["email", "d_email", "cpf", "d_cpf"]);
+    const alreadyExists = await User.query()
+      .where("email", "=", emails.email)
+      .orWhere("email", "=", emails.d_email ? emails.d_email : "")
+      .orWhere("cpf", "=", emails.cpf)
+      .orWhere("cpf", "=", emails.d_cpf ? emails.d_email : "")
+      .first();
+    if (alreadyExists) {
+      return response.redirect("back");
+    }
     const data = request.only([
       "name",
       "address",
@@ -69,12 +78,12 @@ class InstitutionController {
       "state",
       "emec_code",
       "maintainer",
+      "accreditation",
     ]);
     const user = auth ? auth.user : undefined;
     const is_valid = user && user.role === "superintent";
     let type;
     if (user && user.role === "superintent" && user.institution_id == null) {
-      // ? "validator" : "partner";
       type = "validator";
       const leaderData = request.only([
         "first_name",
@@ -86,11 +95,10 @@ class InstitutionController {
         "password",
       ]);
       const institution = await Institution.create({ ...data, is_valid, type });
-      await user.institution().associate(institution);
       const leader = await institution
         .users()
         .create({ ...leaderData, role: "leader" });
-      return response.send({ leader });
+      await user.institution().associate(institution);
     } else {
       type = "partner";
       const leaderData = request.only([
@@ -125,15 +133,10 @@ class InstitutionController {
         role: "director",
       });
       console.log({ director });
-      // const director = await
       await auth.login(leader);
-      // await auth.generate(user);
       leader.last_login = moment().format("YYYY-MM-D H:mm:ss"); // August 13th 2019, 3:19:18 pm
       await leader.save();
-      return response.route("root");
     }
-    // return response.send({ data, user });
-    // Institution.create(data);
 
     return response.redirect(Route.url("root"));
   }
@@ -183,6 +186,7 @@ class InstitutionController {
       "state",
       "emec_code",
       "maintainer",
+      "accreditation",
     ]);
     const user = auth.user;
     const institution = await user.institution().fetch();

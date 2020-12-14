@@ -8,7 +8,7 @@ class AddInstitutionUserRelationSchema extends Schema {
     this.table("users", (table) => {
       // alter table
       table.integer("institution_id").unsigned();
-      table.string("cpf");
+      table.string("cpf").unique();
       table.foreign("institution_id").references("id").inTable("institutions");
       // table
       //   .enum("role", [
