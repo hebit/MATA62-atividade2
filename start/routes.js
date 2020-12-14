@@ -20,7 +20,25 @@ Route.group(() => {
   Route.get("/", "HomeController.index").as("root");
 }).middleware("auth");
 
-Route.resource("/institutions", "InstitutionController");
+Route.resource("institutions", "InstitutionController").except([
+  "edit",
+  "update",
+]);
+Route.get("institutions/auth/edit", "InstitutionController.edit").as(
+  "institutions.edit"
+);
+Route.put("institutions/update", "InstitutionController.update").as(
+  "institutions.update"
+);
+Route.get("institutions/:id/allow", "InstitutionController.allow").as(
+  "institutions.allow"
+);
+
+Route.resource("courses", "CourseController").except(["destroy"]);
+Route.get("courses/:id/delete", "CourseController.destroy").as(
+  "courses.destroy"
+);
+Route.on("/diplomas").render("diploma.index").as("diplomas.index");
 
 // Route.group(() => {
 //   Route.get('/phonecode', 'HomeController.phonecode').as('phonecode');
@@ -52,12 +70,14 @@ Route.group(() => {
 // User Controller
 
 Route.group(() => {
-  Route.get("/manage", "User/UserController.manage").as("userManage");
-  Route.get("/add", "User/UserController.add").as("userAdd");
-  Route.get("/edit/:id", "User/UserController.edit").as("userEdit");
-  Route.post("/edit/:id", "User/UserController.edit")
-    .as("userEdit")
-    .validator("User/Edit");
+  Route.get("/manage", "User/UserController.manage").as("user.manage");
+  // Route.get("/all", "User/UserController.index").as("user.index");
+  Route.get("/add", "User/UserController.add").as("user.add");
+  Route.post("/store", "User/UserController.store").as("user.store");
+  Route.get("/edit/:id", "User/UserController.edit").as("user.edit");
+  Route.post("/edit/:id", "User/UserController.edit").as("user.update");
+  // .validator("User/Edit");
+  Route.get("/delete/:id", "User/UserController.destroy").as("user.delete");
 })
   .prefix("user")
   .middleware("auth");

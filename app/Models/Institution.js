@@ -7,6 +7,9 @@ class Institution extends Model {
   users() {
     return this.hasMany("App/Models/User");
   }
+  courses() {
+    return this.hasMany("App/Models/Course");
+  }
 }
 
 module.exports = Institution;

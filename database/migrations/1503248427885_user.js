@@ -13,15 +13,17 @@ class UserSchema extends Schema {
       table.string("first_name");
       table.string("last_name");
       table.string("phone", 14);
-      table.enum("role", [
-        "admin",
-        "leader",
-        "superintent",
-        "coordinator",
-        "director",
-        "employe_v",
-        "employe_p",
-      ]);
+      table
+        .enum("role", [
+          "admin",
+          "leader",
+          "superintent",
+          "coordinator",
+          "director",
+          "employee_v",
+          "employee_p",
+        ])
+        .notNullable();
       table.string("confirmation_token");
       table.datetime("last_login");
       table.timestamps();

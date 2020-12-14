@@ -14,22 +14,24 @@
 const Factory = use("Factory");
 const Hash = use("Hash");
 const Database = use("Database");
-const uuid = use("uuid/v1");
+// const uuid = use("uuid/v1");
 
 class UserSeeder {
   async run() {
     const user = await Database.from("users").insert([
       {
-        uid: uuid(),
+        // uid: uuid(),
         // provider: "local",
         first_name: "Admin",
         last_name: "admin",
-        email: "admin@admin.com",
-        role: "admin",
+        email: "superintent@test.com",
+        role: "superintent",
+        phone: "71 912345678",
         confirmation_token: "",
         password: await Hash.make("123456"),
       },
     ]);
+    console.log({ user });
   }
 }
 
